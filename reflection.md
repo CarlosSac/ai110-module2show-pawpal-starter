@@ -5,10 +5,10 @@
 **a. Initial design**
 
 - Briefly describe your initial UML design.
+
+    My initial design used four classes. Owner holds a reference to one or more Pet objects. Scheduler depends on both Owner and Pet as inputs, and selects from a list of Task objects to produce a daily plan.
+
 - What classes did you include, and what responsibilities did you assign to each?
-
-My initial design used four classes. Owner holds a reference to one or more Pet objects. Scheduler depends on both Owner and Pet as inputs, and selects from a list of Task objects to produce a daily plan.
-
     - Owner: who is scheduling; holds the daily time budget
     - Pet: whose needs drive the tasks; knows its species and special needs
     - Task: a single care activity with a title, duration, and priority
@@ -18,7 +18,7 @@ My initial design used four classes. Owner holds a reference to one or more Pet 
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
-    - Yes. I added a ScheduledTask class during implementation. Originally I planned to have Scheduler return a plain list of Task objects, but I needed a way to store each task's assigned start time and explanation alongside it. Rather than cluttering Task with scheduling-specific data, I created ScheduledTask to hold that output separately.
+    - Yes. The initial design included a ScheduledTask class to wrap each task with an assigned start time and explanation. During implementation I removed it to keep the system simple and focused on the core requirements.
 
 ---
 
