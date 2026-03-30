@@ -33,7 +33,8 @@
     Frequency: tasks carry a "daily" or "weekly" label that controls when the next occurrence is due after completion.
 
 - How did you decide which constraints mattered most?
-  Time and priority mattered the most because they directly determine whether a task makes it into the schedule at all. A high-priority task that exceeds the time budget is still excluded, because time is the hard ceiling. Priority is the tiebreaker, it decides which tasks fill the budget when not everything fits.
+
+    Time and priority mattered the most because they directly determine whether a task makes it into the schedule at all. A high-priority task that exceeds the time budget is still excluded, because time is the hard ceiling. Priority is the tiebreaker, it decides which tasks fill the budget when not everything fits.
 
 **b. Tradeoffs**
 
@@ -50,12 +51,22 @@
 **a. How you used AI**
 
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
+
+    Primarily for incremental implementation, adding methods one at a time, updating the UI to wire them in, and generating the test suite.
+
 - What kinds of prompts or questions were most helpful?
+
+    Mostly prompts that focuses in a single method or behavior worked better than open-ended ones. Prompts that referenced the actual class names and existing method signatures produced output that fit the codebase without needing much cleanup.
 
 **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
+
+    The initial next_occurrence() implementation calculated the next due date by adding a delta to self.due_date rather than date.today(). For a task that was overdue, this would marked the wrong date instead of resetting to tomorrow.
+
 - How did you evaluate or verify what the AI suggested?
+
+    Read the logic, noticed the base date was wrong, and asked for a correction. Then verified the fix and checking that completed daily tasks always produced a next occurrence dated today + 1, regardless of what the original due_date was.
 
 ---
 
@@ -64,12 +75,22 @@
 **a. What you tested**
 
 - What behaviors did you test?
+
+    Sorting tasks by start time, daily and weekly recurrence, conflict detection (same time, partial overlap, cross-pet), time budget boundary conditions (exact fit, one minute over), and empty-pet crash safety.
+
 - Why were these tests important?
+
+    These are the behaviors most likely to produce wrong output, a wrong recurrence date, or a missed cross-pet conflict would never cause a crash, so only tests catch them.
 
 **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
+
+    4/5. All 15 tests pass and cover the core logic thoroughly. The gap is the Streamlit UI session state behavior and the mark-complete flow have no automated coverage.
+
 - What edge cases would you test next if you had more time?
+
+    Completing the same task twice (duplicate next-occurrence), an owner with zero available minutes, and a task whose start_time is malformed for example "9:5" instead of "09:05".
 
 ---
 
@@ -79,10 +100,16 @@
 
 - What part of this project are you most satisfied with?
 
+    The conflict detection system. It handles same-pet, cross-pet, and exact-same-time collisions in one pass without special cases, and returns warnings instead of crashing.
+
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
 
+    Right now the app only supports one pet. A second iteration would store multiple pets in session state and let the owner add, switch between, and remove pets, which is what Owner and Scheduler already support in the backend, just not exposed in the UI.
+
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+
+    AI is most useful when you already have a clear mental model of what you're building. Prompts like "add a method that filters by completion status or pet name" produced good results immediately because the class structure was already well-defined. Vague prompts early in the design phase produced more drift. The clearer the spec, the more useful the AI output.
