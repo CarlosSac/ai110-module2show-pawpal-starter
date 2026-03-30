@@ -22,6 +22,16 @@ Your final app should:
 - Display the plan clearly (and ideally explain the reasoning)
 - Include tests for the most important scheduling behaviors
 
+## Smarter Scheduling
+
+Several features were added beyond the base scheduler to make task management more realistic:
+
+- **Start times (`HH:MM`)** — each task carries a scheduled start time; `sort_by_time()` returns all pending tasks in chronological order using lexicographic string comparison on zero-padded times.
+- **Conflict detection** — `detect_conflicts()` checks every pair of pending tasks for overlapping time windows and returns a list of warning strings without crashing the program.
+- **Recurring tasks** — tasks have a `frequency` field (`"daily"` or `"weekly"`). Calling `Pet.complete_task()` marks the task done and automatically appends a new instance with a due date of today + 1 day (daily) or today + 7 days (weekly).
+- **Due dates** — each task stores a `due_date` in `YYYY-MM-DD` format, defaulting to today, so recurring instances are traceable across days.
+- **Filtering** — `filter_tasks(completed, pet_name)` lets you query tasks by completion status, by pet, or both.
+
 ## Getting started
 
 ### Setup
