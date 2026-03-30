@@ -32,6 +32,30 @@ Several features were added beyond the base scheduler to make task management mo
 - **Due dates** — each task stores a `due_date` in `YYYY-MM-DD` format, defaulting to today, so recurring instances are traceable across days.
 - **Filtering** — `filter_tasks(completed, pet_name)` lets you query tasks by completion status, by pet, or both.
 
+## Testing PawPal+
+
+### Running the tests
+
+```bash
+venv/Scripts/pytest tests/test_pawpal.py -v
+```
+
+### What the tests cover
+
+| Group | What is verified |
+|---|---|
+| **Core behavior** | Adding tasks to a pet, marking a task complete |
+| **Sorting** | Tasks added out of order are returned in `HH:MM` chronological order; completed tasks are excluded |
+| **Recurrence** | Daily tasks spawn a new instance due tomorrow; weekly tasks spawn one due in 7 days; non-recurring tasks spawn nothing; description and duration are preserved on the new instance |
+| **Conflict detection** | Same start time flagged, partial overlaps flagged, cross-pet overlaps flagged, no false positives when tasks are separated |
+| **Edge cases** | Empty pet does not crash the scheduler; a task that fits the budget exactly is scheduled; a task over budget by 1 minute is excluded |
+
+### Confidence level
+
+★★★★☆ (4/5)
+
+The core scheduling logic, recurrence rules, and conflict detection are all covered and passing. One star is withheld because the Streamlit UI (`app.py`) has no automated tests — session state bugs (e.g., owner inputs not updating after first load) can only be caught manually. Adding UI-level or integration tests would push this to 5/5.
+
 ## Getting started
 
 ### Setup
