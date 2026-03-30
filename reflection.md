@@ -27,14 +27,23 @@
 **a. Constraints and priorities**
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
+
+    Priority: tasks are ranked high > medium > low and selected greedily in that order.
+    Completion status: only pending tasks are eligible; done tasks are excluded from scheduling.
+    Frequency: tasks carry a "daily" or "weekly" label that controls when the next occurrence is due after completion.
+
 - How did you decide which constraints mattered most?
+  Time and priority mattered the most because they directly determine whether a task makes it into the schedule at all. A high-priority task that exceeds the time budget is still excluded, because time is the hard ceiling. Priority is the tiebreaker, it decides which tasks fill the budget when not everything fits.
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
+
+    The scheduler picks tasks in priority order and adds each one if it fits, stopping as soon as a task doesn't fit rather than skipping it and trying smaller ones. This can leave time on the table. For example, if the time is 30 minutes and the remaining tasks are a high-priority 25-minute task followed by two low-priority 10-minute tasks, the scheduler takes the 25-minute task and leaves 5 minutes unused, even though two 10-minute tasks would fill the slot completely.
+
 - Why is that tradeoff reasonable for this scenario?
 
----
+    In a pet care app a missed high-priority task (medication, feeding) is meaningfully worse than unused time. The greedy approach encodes that judgment directly: the owner has already ranked tasks by importance, and the scheduler respects that ranking rather than trading a high-priority task for a better-fitting combination of lower-priority ones.
 
 ## 3. AI Collaboration
 
