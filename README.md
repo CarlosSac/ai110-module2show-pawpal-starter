@@ -36,6 +36,12 @@ Your final app should:
 
 ---
 
+## UML Diagram
+
+<img src="uml_final.png" width="400" alt="PawPal+ class diagram">
+
+---
+
 ## Features
 
 ### Priority-based scheduling
