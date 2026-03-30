@@ -24,7 +24,7 @@ Your final app should:
 
 ## Demo
 
-![PawPal+ demo](demo.gif)
+![PawPal+ demo](docs/demo.gif)
 
 ### Adding a task and viewing conflicts
 
@@ -43,21 +43,27 @@ Pending tasks are displayed sorted by start time. Any time window overlaps are f
 ## Features
 
 ### Priority-based scheduling
+
 Tasks are ranked `high > medium > low` using a numeric mapping and selected greedily in priority order. The scheduler fills the owner's time budget from the top of that ranking, stopping when the next task no longer fits. This guarantees high-priority tasks (medication, feeding) are never bumped in favor of lower-priority ones.
 
 ### Sorting by start time
+
 `Scheduler.sort_by_time()` returns all pending tasks in chronological order. Start times are stored as zero-padded `"HH:MM"` strings, so standard lexicographic string comparison produces correct chronological order without parsing — `"07:30" < "12:00"` works as expected.
 
 ### Conflict detection
+
 `Scheduler.detect_conflicts()` checks every pair of pending tasks using the interval overlap formula (`start_a < end_b AND start_b < end_a`). It catches same-pet overlaps, cross-pet overlaps, and exact-same-start-time collisions. Conflicts are returned as a list of plain warning strings — the program never crashes, and the owner decides how to resolve them.
 
 ### Daily and weekly recurrence
+
 Each task carries a `frequency` field (`"daily"`, `"weekly"`, or `"once"`). Calling `Pet.complete_task()` marks the task done and calls `Task.next_occurrence()`, which creates a new identical task with a fresh `due_date` — today + 1 day for daily, today + 7 days for weekly. Non-recurring tasks return `None` and no new task is appended.
 
 ### Due date tracking
+
 Every task stores a `due_date` in `YYYY-MM-DD` format (defaulting to today). This lets recurring instances be distinguished from their predecessors and makes it easy to filter or display tasks by day.
 
 ### Task filtering
+
 `Scheduler.filter_tasks(completed, pet_name)` queries the task list by completion status, by pet name, or both. Both parameters are optional — omitting them returns all tasks across all pets.
 
 ---
