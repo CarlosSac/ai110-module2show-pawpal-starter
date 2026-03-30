@@ -24,17 +24,17 @@ Your final app should:
 
 ## Demo
 
-<img src="docs/demo.gif" width="400" alt="PawPal+ demo">
+<img src="docs/demo.gif" width="600" alt="PawPal+ demo">
 
 ### Adding a task and viewing conflicts
 
-<img src="docs/demo1.png" width="400" alt="Adding a task">
+<img src="docs/demo1.png" width="600" alt="Adding a task">
 
 The owner and pet info panel lets you set a daily time budget. The Add a Task form captures description, duration, priority, start time, and frequency. A green confirmation banner appears immediately after adding.
 
 ### Pending tasks, conflict warnings, and schedule
 
-<img src="docs/demo2.png" width="400" alt="Pending tasks and schedule">
+<img src="docs/demo2.png" width="600" alt="Pending tasks and schedule">
 
 Pending tasks are displayed sorted by start time. Any time window overlaps are flagged automatically as yellow conflict warnings before the schedule is built. Clicking **Generate schedule** fills the time budget by priority and shows the selected tasks in a table.
 
